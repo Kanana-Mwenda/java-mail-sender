@@ -46,7 +46,7 @@ public class SendEmail {
             
 
             //html template
-            String htmlTemplate = new String(Files.readAllBytes(Paths.get("EmailSenderApp/emailtemplates.html")));
+            String htmlTemplate = new String(Files.readAllBytes(Paths.get("EmailSenderApp/templates/welcome.html")));
 
             message.setContent(htmlTemplate, "text/html");
 
