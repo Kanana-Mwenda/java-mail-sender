@@ -13,15 +13,15 @@ public class SendEmail {
     public static void main(String[] args) {
 
         // Recipient and sender emails
-        String recipient = "kananamwenda20@gmail.com";
-        String sender = "lizamwenda95@gmail.com";
+        String recipient = "ochomoswill@gmail.com";
+        String sender = "kananamwenda20@gmail.com";
 
         // Gmail SMTP host
         String host = "smtp.gmail.com";
 
         // Gmail authentication credentials
-        final String username = "lizamwenda95@gmail.com"; 
-        final String password = "sdzj avmm ltdn njuq";
+        final String username = "kananamwenda20@gmail.com"; 
+        final String password = "sfoq hwop njvp qsqt";
 
         // Mail properties
         Properties properties = new Properties();
@@ -49,7 +49,7 @@ public class SendEmail {
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
             
             //html template
-            String htmlTemplate = new String(Files.readAllBytes(Paths.get("EmailSenderApp/templates/welcome.html")));
+            String htmlTemplate = new String(Files.readAllBytes(Paths.get("EmailSenderApp/templates/trialover.html")));
    
             htmlTemplate = htmlTemplate.replace("{{base64Image}}", base64Image);
             message.setContent(htmlTemplate, "text/html; charset=utf-8");
