@@ -3,7 +3,6 @@ package EmailSenderApp;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import java.util.Base64;
 import javax.mail.Transport;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,14 +44,10 @@ public class SendEmail {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); //recipients email
             message.setSubject("Test Email using Gmail SMTP"); //subject
             
-            byte[] imageBytes = Files.readAllBytes(Paths.get("EmailSenderApp/assets/tatua-logo.png"));
-            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-            
             //html template
             String htmlTemplate = new String(Files.readAllBytes(Paths.get("EmailSenderApp/templates/welcome.html")));
    
-            htmlTemplate = htmlTemplate.replace("{{base64Image}}", base64Image);
-            message.setContent(htmlTemplate, "text/html; charset=utf-8");
+            message.setContent(htmlTemplate, "text/html;");
 
             // Send the message
             Transport.send(message);
