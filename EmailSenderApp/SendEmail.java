@@ -3,6 +3,9 @@ package EmailSenderApp;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
+
+import EmailSenderApp.src.DecryptPassword;
+
 import javax.mail.Transport;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,7 +23,7 @@ public class SendEmail {
 
         // Gmail authentication credentials
         final String username = "kananamwenda20@gmail.com"; 
-        final String password = "sfoq hwop njvp qsqt";
+        final String password = DecryptPassword.getDecryptedPassword();
 
         // Mail properties
         Properties properties = new Properties();
