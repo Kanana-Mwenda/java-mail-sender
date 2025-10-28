@@ -1,11 +1,8 @@
-package EmailSenderApp;
+package EmailSenderApp.src;
 
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-
-import EmailSenderApp.src.DecryptPassword;
-
 import javax.mail.Transport;
 import java.nio.file.Files;
 import java.nio.file.Paths;
