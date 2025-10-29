@@ -11,10 +11,16 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.util.Scanner;
 
 public class EncryptPassword {
     public static void main(String[] args) {
-        try{
+        try (
+            //password to encrypt
+            Scanner scanner = new Scanner(System.in)) {;
+            System.out.print("Enter password to encrypt: ");
+            String password = scanner.nextLine();
+            
             // Load AES key from config.xml
             File xmlFile = new File("config.xml");
 
@@ -32,8 +38,6 @@ public class EncryptPassword {
             byte[] decodedKey = Base64.getDecoder().decode(keyString);
             SecretKeySpec secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
 
-            //password to encrypt
-            String password = "sfoq hwop njvp qsqt";
 
             // Encrypt the password
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
