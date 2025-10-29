@@ -63,8 +63,6 @@ This will create/update `config.xml` with a new AES key.
 
 Run the `EncryptPassword` class to encrypt a password using the generated AES key and update `config.xml`.
 
-**Note**: The password is hardcoded in the code as "sfoq hwop njvp qsqt". Update the code if needed.
-
 **Compile**
 ```bash
 javac -cp "lib/*" EmailSenderApp/src/EncryptPassword.java
