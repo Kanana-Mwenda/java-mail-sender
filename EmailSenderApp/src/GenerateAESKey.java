@@ -3,8 +3,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.io.FileWriter;
-import java.io.IOException;
-
 
 public class GenerateAESKey {
     public static void main(String[] args) throws Exception {
