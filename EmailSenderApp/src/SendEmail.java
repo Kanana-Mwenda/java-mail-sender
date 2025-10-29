@@ -3,9 +3,11 @@ package EmailSenderApp.src;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.mail.Transport;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
+
 
 
 public class SendEmail {
@@ -36,6 +38,16 @@ public class SendEmail {
             }
         });
 
+        String htmlTemplate = "";
+        try {
+            // Load HTML template
+            htmlTemplate = new String(Files.readAllBytes(Paths.get("EmailSenderApp/templates/welcome.html")));
+        } catch (Exception e) {
+            System.out.println("Failed to read email template: " + e.getMessage());
+        }
+
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+
         try {
             // Mime message object
             MimeMessage message = new MimeMessage(session);
@@ -43,15 +55,28 @@ public class SendEmail {
             message.setFrom(new InternetAddress(sender)); //senders email
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient)); //recipients email
             message.setSubject("Test Email using Gmail SMTP"); //subject
-            
-            //html template
-            String htmlTemplate = new String(Files.readAllBytes(Paths.get("EmailSenderApp/templates/welcome.html")));
-   
             message.setContent(htmlTemplate, "text/html;");
 
             // Send the message
             Transport.send(message);
             System.out.println(" Mail successfully sent!");
+
+              InsertEmailLog.insertLog(
+                1,                               // sender_id_fk
+                "Kanana",                      // sender_name_fk
+                recipient,                                  // receiver_email
+                "text/html",               // email_content_type
+                htmlTemplate,                               // email_message_body
+                "Test Email using Gmail SMTP", // email_subject
+                "sent",                              // status
+                now,                                        // status_date
+                "Email sent successfully",// status_description
+                null,                       // email_attachment
+                now,                                        // date_created
+                now                                         // date_modified
+            );
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
