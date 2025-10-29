@@ -30,6 +30,7 @@ public class InsertEmailLog {
             try (Connection conn = DBConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             
+            // Set parameters
             stmt.setInt(1, senderIdFk);
             stmt.setString(2, senderNameFk);
             stmt.setString(3, receiverEmail);
