@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 
 
-
 public class SendEmail {
     public static void main(String[] args) {
 
@@ -22,7 +21,7 @@ public class SendEmail {
 
         // Gmail authentication credentials
         final String username = "kananamwenda20@gmail.com"; 
-        final String password = DecryptPassword.getDecryptedPassword();
+        final String password = DecryptPassword.getDecryptedPassword("encryptedAppPassword");
 
         // Mail properties
         Properties properties = new Properties();
@@ -68,7 +67,7 @@ public class SendEmail {
                 "text/html",               // email_content_type
                 htmlTemplate,                               // email_message_body
                 "Test Email using Gmail SMTP", // email_subject
-                "sent",                              // status
+                "cancelled",                              // status
                 now,                                        // status_date
                 "Email sent successfully",// status_description
                 null,                       // email_attachment

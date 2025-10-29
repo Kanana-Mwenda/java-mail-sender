@@ -9,7 +9,8 @@ public class DBConnection {
     public static Connection getConnection() {
         String url = "jdbc:postgresql://localhost:5432/emails_db";
         String user = "kanana";
-        String password = "kanana123";
+
+        String password = DecryptPassword.getDecryptedPassword("encryptedDBPassword");
 
         try {
             Connection conn = DriverManager.getConnection(url, user, password);
