@@ -15,13 +15,9 @@ public class GenerateAESKey {
         String encodedKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
 
         try(FileWriter writer = new FileWriter("config.xml")) {
-            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            writer.write("<config>\n");
-            writer.write("<aesKey>" + encodedKey + "</aesKey>\n");
-            writer.write("</config>");
+            writer.write(encodedKey);
         }
-
-        System.out.println("AES key generated and saved to config.xml");
+        System.out.println("AES key generated and saved to aes.key");
         }
     }
 

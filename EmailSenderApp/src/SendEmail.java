@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 
 public class SendEmail {
     public static void main(String[] args) {
+        InitializeApp.run();
 
         // Recipient and sender emails
         String recipient = "lizamwenda95@gmail.com";
@@ -81,4 +82,6 @@ public class SendEmail {
             e.printStackTrace();
         }
     }
+
+        
 }

@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<config>      
-    
-    <aesKey>Hg9xCEbkjtuuZED8k1Y7uqftZTsfTwlDd4JYoaRVimc=</aesKey>  
-    
-    <encryptedAppPassword>TGEz827ilG7jLyUTCH113PWxChyU0HKeD/gs5tvCRfk=</encryptedAppPassword>
-    
-    <encryptedDBPassword>xfMQY7sAoeOXZ9dCpYPBqw==</encryptedDBPassword>
+<config >
+    <SMTPUser type ="cleartext"> kananamwenda20@gmail.com </SMTPUser>
+    <SMTPPassword type ="cleartext"> sfoq hwop njvp qsqt </SMTPPassword>
 </config>
