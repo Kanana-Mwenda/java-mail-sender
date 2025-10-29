@@ -60,6 +60,7 @@ public class SendEmail {
             Transport.send(message);
             System.out.println(" Mail successfully sent!");
 
+            // Method to insert email log
               InsertEmailLog.insertLog(
                 1,                               // sender_id_fk
                 "Kanana",                      // sender_name_fk
@@ -67,7 +68,7 @@ public class SendEmail {
                 "text/html",               // email_content_type
                 htmlTemplate,                               // email_message_body
                 "Test Email using Gmail SMTP", // email_subject
-                "cancelled",                              // status
+                "sent",                              // status
                 now,                                        // status_date
                 "Email sent successfully",// status_description
                 null,                       // email_attachment

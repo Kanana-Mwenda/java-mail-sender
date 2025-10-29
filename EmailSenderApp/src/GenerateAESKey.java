@@ -17,7 +17,7 @@ public class GenerateAESKey {
         try(FileWriter writer = new FileWriter("config.xml")) {
             writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
             writer.write("<config>\n");
-            writer.write("    <aesKey>" + encodedKey + "</aesKey>\n");
+            writer.write("<aesKey>" + encodedKey + "</aesKey>\n");
             writer.write("</config>");
         }
 

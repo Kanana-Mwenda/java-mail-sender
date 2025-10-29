@@ -9,8 +9,9 @@ public class InsertEmailSender {
     public static void main(String[] args) {
         try(Connection conn = DBConnection.getConnection()) {
         
+            //SQL Query
             String sql = "INSERT INTO email_senders (sender_name, sender_username, sender_password, date_created, date_modified) VALUES (?, ?, ?, ?, ?)";
-            
+            //SQL Statement
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             String senderName = "Kanana";
@@ -19,12 +20,14 @@ public class InsertEmailSender {
             
             Timestamp now = new Timestamp(System.currentTimeMillis());
 
+            //Set parameters
             stmt.setString(1, senderName);
             stmt.setString(2, senderUsername);
             stmt.setString(3, senderPassword);
             stmt.setTimestamp(4, now);
             stmt.setTimestamp(5, now);
 
+            //Execute the insertion
             int rows = stmt.executeUpdate();
 
             if (rows>0){

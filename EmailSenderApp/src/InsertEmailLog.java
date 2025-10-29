@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 public class InsertEmailLog {
+
     public static void insertLog(
             int senderIdFk,
             String senderNameFk,
@@ -20,6 +21,7 @@ public class InsertEmailLog {
             Timestamp dateModified)
             {
 
+                // SQL Query
                 String sql = "INSERT INTO email_logs "
                         + "(sender_id_fk, sender_name_fk, receiver_email, email_content_type, email_message_body, "
                         + "email_subject, status, status_date, status_description, email_attachment, date_created, date_modified) "
@@ -44,6 +46,7 @@ public class InsertEmailLog {
             stmt.setTimestamp(11, now);
             stmt.setTimestamp(12, now);
 
+            // Execute the insertion
             int rowsInserted = stmt.executeUpdate();
 
             if (rowsInserted > 0) {
