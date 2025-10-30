@@ -52,9 +52,9 @@ public class InitializeApp {
                 //Database credentials
                 Element dbPassword = (Element) doc.getElementsByTagName("DBPassword").item(0);
                 if (dbPassword != null){
-                    String dbPasswordType = dbPassword.getAttribute("type");
+                    String PasswordType = dbPassword.getAttribute("type");
                     //encryption
-                    if (dbPasswordType.equals("cleartext")){
+                    if (PasswordType.equals("cleartext")){
                         String clearDbPassword = dbPassword.getTextContent().trim();
                         System.out.println("Encrypting DB password...");
 
