@@ -145,7 +145,7 @@ This will send the email using the HTML template from `EmailSenderApp/templates/
 
 ## Configuration
 
-- `config.xml`: Stores the AES key and encrypted password.
+- `config.xml`: Stores the credentails.
 - Database connection details are in `DBConnection.java`.
 - Email templates are in `EmailSenderApp/templates/`.
 
