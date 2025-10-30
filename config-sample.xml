@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<config>
+    <SMTPUser type="cleartext">your-email@example.com</SMTPUser>
+    <SMTPPassword type="cleartext">your-smtp-password</SMTPPassword>
+
+    <DBUser type="cleartext">your-db-username</DBUser>
+    <DBPassword type="cleartext">your-db-password</DBPassword>
+</config>
