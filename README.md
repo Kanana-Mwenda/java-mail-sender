@@ -43,11 +43,27 @@ This project is a Java-based email sender application that securely handles emai
 
 ## Usage
 
-### 1. Generate AES Key
+### 1. Initialize App
 
-Run the `GenerateAESKey` class to generate a new AES key and save it to `config.xml`.
+The `InitializeApp` class checks if `config.xml` exists and verifies whether the credentials (SMTP and database passwords) are stored as cleartext or encrypted. If a password is in cleartext, it will automatically encrypt it and update `config.xml`.
 
-**Compile** (if not done globally):
+**Compile**
+```bash
+javac -cp "lib/*" EmailSenderApp/src/InitializeApp.java
+```
+
+**Run**:
+```bash
+java -cp ".:lib/*" EmailSenderApp.src.InitializeApp
+```
+
+### 2. Generate AES Key
+
+Run the `GenerateAESKey` class to generate a new AES key.All password encryption and decryption will use this key
+
+**Note**: Ensure the `EncryptPassword` and `DecryptPassword` classes have the same hardcoded AES key to maintain consistency.
+
+**Compile**:
 ```bash
 javac -cp "lib/*" EmailSenderApp/src/GenerateAESKey.java
 ```
@@ -59,7 +75,7 @@ java -cp ".:lib/*" EmailSenderApp.src.GenerateAESKey
 
 This will create/update `config.xml` with a new AES key.
 
-### 2. Encrypt Password
+### 3. Encrypt Password
 
 Run the `EncryptPassword` class to encrypt a password using the generated AES key and update `config.xml`.
 
@@ -75,7 +91,7 @@ java -cp ".:lib/*" EmailSenderApp.src.EncryptPassword
 
 This will encrypt the password and add the encrypted value to `config.xml`.
 
-### 3. Decrypt Password
+### 4. Decrypt Password
 
 Run the `DecryptPassword` class to decrypt and display the password from `config.xml`.
 
@@ -91,7 +107,7 @@ java -cp ".:lib/*" EmailSenderApp.src.DecryptPassword
 
 This will print the decrypted password to the console.
 
-### 4. Insert Email Sender Data
+### 5. Insert Email Sender Data
 
 Run the `InsertEmailSender` class to insert sender information into the database.
 
@@ -109,7 +125,7 @@ java -cp ".:lib/*" EmailSenderApp.src.InsertEmailSender
 
 This will insert a new sender record into the `email_senders` table.
 
-### 5. Send Email and Insert Log
+### 6. Send Email and Insert Log
 
 Run the `SendEmail` class to send an email using the decrypted password and automatically log the activity.
 
