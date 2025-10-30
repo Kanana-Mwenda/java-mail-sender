@@ -10,7 +10,7 @@ public class DBConnection {
         String url = "jdbc:postgresql://localhost:5432/emails_db";
         String user = "kanana";
 
-        String password = DecryptPassword.getDecryptedPassword("encryptedDBPassword");
+        String password = DecryptPassword.getDecryptedPassword("DBPassword");
 
         try {
             Connection conn = DriverManager.getConnection(url, user, password);

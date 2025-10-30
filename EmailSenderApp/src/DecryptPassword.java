@@ -10,6 +10,9 @@ import org.w3c.dom.Document;
 import java.io.File;
 
 public class DecryptPassword {
+
+    // AES key
+    private static final String AES_KEY = "Hg9xCEbkjtuuZED8k1Y7uqftZTsfTwlDd4JYoaRVimc=";
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Usage: java DecryptPassword <passwordType>");
@@ -17,7 +20,7 @@ public class DecryptPassword {
             return;
         }
 
-        String passwordType = args[0]; // e.g., "encryptedAppPassword" or "encryptedDbPassword"
+        String passwordType = args[0]; //"SMTPPassword" or "DBPassword"
         String decryptedPassword = getDecryptedPassword(passwordType);
 
         if (decryptedPassword != null) {
@@ -37,18 +40,18 @@ public class DecryptPassword {
             Document doc = documentBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
 
-            // Extract AES key
-            String keyString = doc.getElementsByTagName("aesKey").item(0).getTextContent();
+            // Extract encrypted password
             String encryptedPassword = doc.getElementsByTagName(passwordType).item(0).getTextContent();
 
             // Decode AES key from base64
-            byte[] decodedKey = Base64.getDecoder().decode(keyString);
-            SecretKeySpec secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+            byte[] decodedKey = Base64.getDecoder().decode(AES_KEY);
+            SecretKeySpec secretKey = new SecretKeySpec(decodedKey, "AES");
 
             // Decrypt the password
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedPassword));
+            
             return new String(decryptedBytes, StandardCharsets.UTF_8);
 
         } catch (Exception e) {

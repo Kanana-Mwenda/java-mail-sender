@@ -1,11 +1,6 @@
 package EmailSenderApp.src;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.Base64;
-
-import javax.crypto.spec.SecretKeySpec;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.*;
@@ -34,45 +29,45 @@ public class InitializeApp {
                 doc.getDocumentElement().normalize();
 
 
-                //check smtpuser and smtppassword elements
-                Element smtpUser =(Element) doc.getElementsByTagName("SMTPUser").item(0);
+                //SMTP credentials
                 Element smtpPassword = (Element) doc.getElementsByTagName("SMTPPassword").item(0);
-
-                if (smtpUser == null || smtpPassword== null){
-                    System.out.println("SMTPUser or SMTPPassword elements missing in config.xml");
-                    return;
-                }
-
-                //check the type attribute
-                String userType = smtpUser.getAttribute("type");
-                String passwordType = smtpPassword.getAttribute("type");
-
-                System.out.println("SMTP User Type: " + userType);
-                System.out.println("SMTP Password Type: " + passwordType);
-
-                // load aes key
-                File keyFile = new File("aes.key");
-                if (!keyFile.exists()) {
-                    System.out.println("AES key file not found (aes.key)");
-                    return;
-                }
-
-                String base64Key = new String(Files.readAllBytes(keyFile.toPath()), StandardCharsets.UTF_8);
-                byte[] decodedKey = Base64.getDecoder().decode(base64Key);
-                SecretKeySpec secretKey = new SecretKeySpec(decodedKey, "AES");
-
+                if (smtpPassword != null){
+                    String passwordType = smtpPassword.getAttribute("type");
 
                 //encryption
-                if (passwordType.equals("cleartext")){
-                    String clearPassword = smtpPassword.getTextContent().trim();
-                    System.out.println("Encrypting SMTP password...");
-                    
-                    String encryptedPassword =  EncryptPassword.encrypt(clearPassword);
+                    if (passwordType.equals("cleartext")){
+                        String clearPassword = smtpPassword.getTextContent().trim();
+                        System.out.println("Encrypting SMTP password...");
+                        
+                        String encryptedPassword =  EncryptPassword.encrypt(clearPassword);
 
-                    //update XML
-                    smtpPassword.setTextContent(encryptedPassword);
-                    smtpPassword.setAttribute("type", "encrypted");
+                        //update XML
+                        smtpPassword.setTextContent(encryptedPassword);
+                        smtpPassword.setAttribute("type", "encrypted");
+                } else {
+                    System.out.println("SMTPPassword is already encrypted.");
+                }
+        }
 
+                //Database credentials
+                Element dbPassword = (Element) doc.getElementsByTagName("DBPassword").item(0);
+                if (dbPassword != null){
+                    String dbPasswordType = dbPassword.getAttribute("type");
+                    //encryption
+                    if (dbPasswordType.equals("cleartext")){
+                        String clearDbPassword = dbPassword.getTextContent().trim();
+                        System.out.println("Encrypting DB password...");
+
+                        String encryptedDbPassword = EncryptPassword.encrypt(clearDbPassword);
+   
+                        //update XML
+                        dbPassword.setTextContent(encryptedDbPassword);
+                        dbPassword.setAttribute("type", "encrypted");
+                    } else {
+                        System.out.println("DBPassword is already encrypted.");
+                    }
+                }
+                     
                     //save updated XML
                     TransformerFactory transformerFactory = TransformerFactory.newInstance();
                     Transformer transformer = transformerFactory.newTransformer();
@@ -81,14 +76,14 @@ public class InitializeApp {
                     StreamResult result = new StreamResult(configFile);
                     transformer.transform(source, result); 
 
-                    System.out.println("SMTPPassword encrypted and config.xml updated.");
-                    } else {
-                    System.out.println("SMTPPassword is already encrypted.");
-
-                }
-
+                    System.out.println("Config.xml file updated successfully.");
+     
             } catch (Exception e){
                 System.out.println("Initialization failed: " + e.getMessage());         
         }
+    }
+
+    public static void main(String[] args) {
+        run();
     }
 }

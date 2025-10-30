@@ -15,19 +15,14 @@ import java.util.Scanner;
 
 public class EncryptPassword {
 
-    public static String encrypt(String clearPassword, SecretKeySpec secretKey) {
-        try {
-            // Load AES key from config.xml
-            File xmlFile = new File("config.xml");
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = dbFactory.newDocumentBuilder();
-            Document doc = documentBuilder.parse(xmlFile);
-            doc.getDocumentElement().normalize();
+    //  AES key
+    private static final String AES_KEY = "Hg9xCEbkjtuuZED8k1Y7uqftZTsfTwlDd4JYoaRVimc="; 
 
-            // Read AES key
-            String keyString = doc.getElementsByTagName("aesKey").item(0).getTextContent();
-            byte[] decodedKey = Base64.getDecoder().decode(keyString);
-            SecretKeySpec secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+    public static String encrypt(String clearPassword) {
+        try {
+            // Prepare AES key
+            byte[] decodedKey = Base64.getDecoder().decode(AES_KEY);
+            SecretKeySpec secretKey = new SecretKeySpec(decodedKey, "AES");
 
             // Encrypt password
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");

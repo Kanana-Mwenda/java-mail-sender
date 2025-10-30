@@ -22,7 +22,7 @@ public class SendEmail {
 
         // Gmail authentication credentials
         final String username = "kananamwenda20@gmail.com"; 
-        final String password = DecryptPassword.getDecryptedPassword("encryptedAppPassword");
+        final String password = DecryptPassword.getDecryptedPassword("SMTPPassword");
 
         // Mail properties
         Properties properties = new Properties();
