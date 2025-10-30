@@ -55,13 +55,13 @@ public class InitializeApp {
                     String PasswordType = dbPassword.getAttribute("type");
                     //encryption
                     if (PasswordType.equals("cleartext")){
-                        String clearDbPassword = dbPassword.getTextContent().trim();
+                        String clearPassword = dbPassword.getTextContent().trim();
                         System.out.println("Encrypting DB password...");
 
-                        String encryptedDbPassword = EncryptPassword.encrypt(clearDbPassword);
+                        String encryptedPassword = EncryptPassword.encrypt(clearPassword);
    
                         //update XML
-                        dbPassword.setTextContent(encryptedDbPassword);
+                        dbPassword.setTextContent(encryptedPassword);
                         dbPassword.setAttribute("type", "encrypted");
                     } else {
                         System.out.println("DBPassword is already encrypted.");
