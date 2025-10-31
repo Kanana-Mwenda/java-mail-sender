@@ -4,6 +4,12 @@ This project is a Java-based email sender application that securely handles emai
 
 ## Features
 
+The application consists of two main classes:
+
+- **EmailClient**: Handles application initialization, database connections, email sending, sender data insertion, and email logging.
+- **CryptoUtils**: Manages AES key generation, password encryption, and decryption.
+
+Key functionalities include:
 - Generate AES encryption keys
 - Encrypt and decrypt email passwords
 - Send HTML emails using Gmail SMTP
@@ -43,105 +49,50 @@ This project is a Java-based email sender application that securely handles emai
 
 ## Usage
 
-### 1. Initialize App
+The application consists of two main classes: `EmailClient` and `CryptoUtils`. Run the respective main methods to perform operations.
 
-The `InitializeApp` class checks if `config.xml` exists and verifies whether the credentials (SMTP and database passwords) are stored as cleartext or encrypted. If a password is in cleartext, it will automatically encrypt it and update `config.xml`.
+### Running CryptoUtils
 
-**Compile**
-```bash
-javac -cp "lib/*" EmailSenderApp/src/InitializeApp.java
-```
-
-**Run**:
-```bash
-java -cp ".:lib/*" EmailSenderApp.src.InitializeApp
-```
-
-### 2. Generate AES Key
-
-Run the `GenerateAESKey` class to generate a new AES key.All password encryption and decryption will use this key
-
-**Note**: Ensure the `EncryptPassword` and `DecryptPassword` classes have the same hardcoded AES key to maintain consistency.
+The `CryptoUtils` class handles AES key generation, password encryption, and decryption. Running its main method will prompt for passwords to encrypt and display decrypted passwords.
 
 **Compile**:
 ```bash
-javac -cp "lib/*" EmailSenderApp/src/GenerateAESKey.java
+javac -cp "lib/*" EmailSenderApp/src/CryptoUtils.java
 ```
 
 **Run**:
 ```bash
-java -cp ".:lib/*" EmailSenderApp.src.GenerateAESKey
+java -cp ".:lib/*" EmailSenderApp.src.CryptoUtils
 ```
 
-This will create/update `config.xml` with a new AES key.
+This will:
+- Encrypt SMTP and DB passwords (prompts for input).
+- Decrypt and display the SMTP password.
 
-### 3. Encrypt Password
+**Note**: The AES key is hardcoded in `CryptoUtils.java`. Ensure consistency across operations.
 
-Run the `EncryptPassword` class to encrypt a password using the generated AES key and update `config.xml`.
+### Running EmailClient
 
-**Compile**
+The `EmailClient` class handles application initialization, database connections, email sending, sender data insertion, and email logging. Running its main method will execute all these operations in sequence.
+
+**Compile**:
 ```bash
-javac -cp "lib/*" EmailSenderApp/src/EncryptPassword.java
+javac -cp "lib/*" EmailSenderApp/src/EmailClient.java
 ```
 
 **Run**:
 ```bash
-java -cp ".:lib/*" EmailSenderApp.src.EncryptPassword
+java -cp ".:lib/*" EmailSenderApp.src.EmailClient
 ```
 
-This will encrypt the password and add the encrypted value to `config.xml`.
+This will:
+- Initialize the app.
+- Connect to the database.
+- Insert email sender data.
+- Send an email using the HTML template from `EmailSenderApp/templates/welcome.html`.
+- Log the email activity.
 
-### 4. Decrypt Password
-
-Run the `DecryptPassword` class to decrypt and display the password from `config.xml`.
-
-**Compile** 
-```bash
-javac -cp "lib/*" EmailSenderApp/src/DecryptPassword.java
-```
-
-**Run**:
-```bash
-java -cp ".:lib/*" EmailSenderApp.src.DecryptPassword
-```
-
-This will print the decrypted password to the console.
-
-### 5. Insert Email Sender Data
-
-Run the `InsertEmailSender` class to insert sender information into the database.
-
-**Note**: The sender details are hardcoded in the code. Update as needed.
-
-**Compile** :
-```bash
-javac -cp "lib/*" EmailSenderApp/src/InsertEmailSender.java
-```
-
-**Run**:
-```bash
-java -cp ".:lib/*" EmailSenderApp.src.InsertEmailSender
-```
-
-This will insert a new sender record into the `email_senders` table.
-
-### 6. Send Email and Insert Log
-
-Run the `SendEmail` class to send an email using the decrypted password and automatically log the activity.
-
-**Note**: Update the recipient, sender and other details in the code as needed. Ensure Gmail App Password is used for authentication.
-
-**Compile** 
-```bash
-javac -cp "lib/*" EmailSenderApp/src/SendEmail.java
-```
-
-**Run**:
-```bash
-java -cp ".:lib/*" EmailSenderApp.src.SendEmail
-```
-
-This will send the email using the HTML template from `EmailSenderApp/templates/welcome.html` and insert a log entry into the `email_logs` table.
+**Note**: Update hardcoded values (e.g., recipient, sender details) in `EmailClient.java` as needed. Ensure Gmail App Password is used for authentication.
 
 ## Configuration
 
