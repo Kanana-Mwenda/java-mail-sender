@@ -132,8 +132,8 @@ public class CryptoUtils {
     public static void main(String[] args) {
     try {
         // Step 1: Generate AES key
-        // String aesKey = GenerateAESKey();
-        // System.out.println("Generated AES Key: " + aesKey);
+        String aesKey = GenerateAESKey();
+        System.out.println("Generated AES Key: " + aesKey);
 
         // Step 2: Encrypt a password
         encryptPassword("SMTPPassword");
