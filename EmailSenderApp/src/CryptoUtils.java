@@ -36,7 +36,7 @@ public class CryptoUtils {
     // AES key
     private static final String AES_KEY = "Hg9xCEbkjtuuZED8k1Y7uqftZTsfTwlDd4JYoaRVimc=";
     
-    public static String encrypt(String clearPassword) {
+    public static String encrypt(String passwordType,String clearPassword) {
         try {
             // Prepare AES key
             byte[] decodedKey = Base64.getDecoder().decode(AES_KEY);
@@ -55,12 +55,13 @@ public class CryptoUtils {
         }
     }
 
-    public static void encryptPassword() {
+    public static void encryptPassword(String passwordType) {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.print("Enter password to encrypt: ");
-            String password = scanner.nextLine();
+            String clearPassword = scanner.nextLine();
 
-            String encryptedPassword = encrypt(password);
+            String encryptedPassword = encrypt(passwordType, clearPassword);
+            
 
             // Update XML with encrypted password
             File xmlFile = new File("config.xml");
@@ -135,7 +136,8 @@ public class CryptoUtils {
         // System.out.println("Generated AES Key: " + aesKey);
 
         // Step 2: Encrypt a password
-        encryptPassword();
+        encryptPassword("SMTPPassword");
+        encryptPassword("DBPassword");
 
         // Step 3: Decrypt password from config.xml
         decryptPassword("SMTPPassword");
