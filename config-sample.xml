@@ -3,6 +3,9 @@
     <SMTPUser type="cleartext">your-email@example.com</SMTPUser>
     <SMTPPassword type="cleartext">your-smtp-password</SMTPPassword>
 
+    <DBHost>your-host</DBHost>
+    <DBPort>your-port</DBPort>
+    <DBName type="cleartext">your-database-name</DBName>
     <DBUser type="cleartext">your-db-username</DBUser>
     <DBPassword type="cleartext">your-db-password</DBPassword>
 </config>
