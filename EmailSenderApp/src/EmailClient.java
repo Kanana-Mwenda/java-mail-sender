@@ -156,7 +156,7 @@ public class EmailClient {
     public static Connection getConnection() {
         String host = CryptoUtils.getUrlValue("host");
         String port = CryptoUtils.getUrlValue("port"); 
-        String dbName = CryptoUtils.getDecryptedUsername("DBname"); 
+        String dbName = CryptoUtils.getDecryptedDBname("DBname"); 
 
         String url = "jdbc:postgresql://" + host + ":" + port + "/" + dbName;
         String user = CryptoUtils.getDecryptedUsername("DBUsername");

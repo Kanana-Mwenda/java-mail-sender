@@ -257,6 +257,36 @@ public class CryptoUtils {
         }
     }
 
+    // Method to decrypt a dbname based on its type
+    public static String getDecryptedDBname(String tagName) {
+        try {
+            File xmlFile = new File("config.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = dbFactory.newDocumentBuilder();
+            Document doc = documentBuilder.parse(xmlFile);
+            doc.getDocumentElement().normalize();
+
+            // Extract encrypted password
+            String encryptedDBname = doc.getElementsByTagName(tagName).item(0).getTextContent();
+
+            // Decode AES key from base64
+            byte[] decodedKey = Base64.getDecoder().decode(AES_KEY);
+            SecretKeySpec secretKey = new SecretKeySpec(decodedKey, "AES");
+
+            // Decrypt the password
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedDBname));
+
+            return new String(decryptedBytes, StandardCharsets.UTF_8);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     // Method to get url value 
         public static String getUrlValue(String tagName) {
             try {
