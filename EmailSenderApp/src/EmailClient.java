@@ -61,12 +61,31 @@ public class EmailClient {
                 }
         }
 
+                Element smtpUsername = (Element) doc.getElementsByTagName("SMTPUsername").item(0);
+                if (smtpUsername != null){
+                    String usernameType = smtpUsername.getAttribute("type");
+
+                //encryption
+                    if (usernameType.equals("cleartext")){
+                        String clearUsername = smtpUsername.getTextContent().trim();
+                        System.out.println("Encrypting SMTP username...");
+
+                        String encryptedUsername =  CryptoUtils.encrypt("SMTPUsername",clearUsername);
+
+                        //update XML
+                        smtpUsername.setTextContent(encryptedUsername);
+                        smtpUsername.setAttribute("type", "encrypted");
+                } else {
+                    System.out.println("SMTPUsername is already encrypted.");
+                }
+        }
+
                 //Database credentials
                 Element dbPassword = (Element) doc.getElementsByTagName("DBPassword").item(0);
                 if (dbPassword != null){
-                    String PasswordType = dbPassword.getAttribute("type");
+                    String passwordType = dbPassword.getAttribute("type");
                     //encryption
-                    if (PasswordType.equals("cleartext")){
+                    if (passwordType.equals("cleartext")){
                         String clearPassword = dbPassword.getTextContent().trim();
                         System.out.println("Encrypting DB password...");
 
@@ -77,6 +96,44 @@ public class EmailClient {
                         dbPassword.setAttribute("type", "encrypted");
                     } else {
                         System.out.println("DBPassword is already encrypted.");
+                    }
+                }
+
+
+                Element dbUsername = (Element) doc.getElementsByTagName("DBUsername").item(0);
+                if (dbUsername != null){
+                    String usernameType = dbUsername.getAttribute("type");
+                    //encryption
+                    if (usernameType.equals("cleartext")){
+                        String clearUsername = dbUsername.getTextContent().trim();
+                        System.out.println("Encrypting DB username...");
+
+                        String encryptedUsername = CryptoUtils.encrypt("DBUsername",clearUsername);
+
+                        //update XML
+                        dbUsername.setTextContent(encryptedUsername);
+                        dbUsername.setAttribute("type", "encrypted");
+                    } else {
+                        System.out.println("DBUsername is already encrypted.");
+                    }
+                }
+
+
+                Element dbName = (Element) doc.getElementsByTagName("DBname").item(0);
+                if (dbName != null){
+                    String dbNameType = dbName.getAttribute("type");
+                    //encryption
+                    if (dbNameType.equals("cleartext")){
+                        String clearDBname = dbName.getTextContent().trim();
+                        System.out.println("Encrypting DB username...");
+
+                        String encryptedDBname = CryptoUtils.encrypt("DBname",clearDBname);
+
+                        //update XML
+                        dbUsername.setTextContent(encryptedDBname);
+                        dbUsername.setAttribute("type", "encrypted");
+                    } else {
+                        System.out.println("DBname is already encrypted.");
                     }
                 }
 
@@ -97,9 +154,12 @@ public class EmailClient {
 
     // DBConnection function
     public static Connection getConnection() {
-        String url = "jdbc:postgresql://localhost:5432/emails_db";
-        String user = "kanana";
+        String host = CryptoUtils.getUrlValue("host");
+        String port = CryptoUtils.getUrlValue("port"); 
+        String dbName = CryptoUtils.getDecryptedUsername("DBname"); 
 
+        String url = "jdbc:postgresql://" + host + ":" + port + "/" + dbName;
+        String user = CryptoUtils.getDecryptedUsername("DBUsername");
         String password = CryptoUtils.getDecryptedPassword("DBPassword");
 
         try {
@@ -125,8 +185,8 @@ public class EmailClient {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             String senderName = "Kanana";
-            String senderUsername = "kananamwenda20@gmail.com";
-            String senderPassword = "TGEz827ilG7jLyUTCH113PWxChyU0HKeD/gs5tvCRfk=";
+            String senderUsername = CryptoUtils.getEncryptedUsername("SMTPUsername");
+            String senderPassword = CryptoUtils.getEncryptedPassword("SMTPPassword");
 
             Timestamp now = new Timestamp(System.currentTimeMillis());
 
